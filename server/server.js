@@ -18,16 +18,34 @@
     console.log('New User Connected')
 
     // emit is used to create the event
-    socket.emit('newEmail', {
-        from: 'mike@mike.com',
-        text: 'Hello Kwame',
-        createdAt: 123
+    // socket.emit('newMessage', {   // emit an event to a single connection.
+    //     from: 'mike@mike.com',
+    //     text: 'Hello Kwame',
+    //     createdAt: 123
+    // })
+
+   socket.on('createMessage', (message) => {
+      console.log('This is the message', message);
+      io.emit('newMessage', {   // io.emit will emit an event to every single connection
+       from: message.from,
+       text: message.text,
+       createdAt: new Date().getTime()
+      })
     })
 
-   socket.on('createEmail', (newEmail) => {
-      console.log('createEmail', newEmail)
-    })
+    // socket.emit from Admin text Welcome to the chat app
+      socket.emit('newMessage', {
+          from: 'Admin',
+          text: 'Welcome to the chat app',
+          createdAt: new Date().getTime()
+      })
 
+      // socket.broadcast.emit from Admin text New user joined
+     socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: 'New User Joined',
+        createdAt: new Date().getTime()
+    })
 
    })
 

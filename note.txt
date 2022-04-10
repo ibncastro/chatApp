@@ -10,3 +10,7 @@ REAL TIME WEB APPS WITH SOCKET.IO
 - we can send and recieve anything from server and client using custom events.
 - normally the data exchanged btn the client and server are objects with properties.
 - io.on or io.emit is very special , we normally dont attach anything to it or make calls to it other than what we have done. which is connect and disconnect
+
+- Broadcasting is a term for emiting an event to all but one specific user.
+- socket.Broadcast will broadcast message to the rest except the mentioned socket.
+- it is an object that has its own emit function.

@@ -6,9 +6,13 @@
         socket.on('connect', function () {
             console.log('Connected to server')
 
-            socket.emit('createEmail', {
-                to: 'jenny@goo.com',
+            socket.emit('createMessage', {
+                from: 'jenny@goo.com',
                 text: 'Hey Kwame'
+            })
+
+            socket.on('newMessage', function(message) {
+                console.log('New Message', message)
             })
         });  
 
@@ -19,8 +23,6 @@
          })
 
 
-         socket.on('newEmail', function(email) {
-             console.log('New Email', email)
-         })
+        
 
         
