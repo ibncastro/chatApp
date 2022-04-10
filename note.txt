@@ -4,3 +4,9 @@ REAL TIME WEB APPS WITH SOCKET.IO
 - its library built upon node.js's native websocket.
 
 - use path.join() to move btn directories instead of using __dirname + /../public/
+
+- Some built in events u can listen to is "connect" and "disconnect".
+- use socket.on to register a listener.
+- we can send and recieve anything from server and client using custom events.
+- normally the data exchanged btn the client and server are objects with properties.
+- io.on or io.emit is very special , we normally dont attach anything to it or make calls to it other than what we have done. which is connect and disconnect
