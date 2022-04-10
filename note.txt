@@ -1,0 +1,6 @@
+REAL TIME WEB APPS WITH SOCKET.IO
+
+- socket.io enables two-way communication btn the server and client.
+- its library built upon node.js's native websocket.
+
+- use path.join() to move btn directories instead of using __dirname + /../public/
