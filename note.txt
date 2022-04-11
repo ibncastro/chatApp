@@ -14,3 +14,5 @@ REAL TIME WEB APPS WITH SOCKET.IO
 - Broadcasting is a term for emiting an event to all but one specific user.
 - socket.Broadcast will broadcast message to the rest except the mentioned socket.
 - it is an object that has its own emit function.
+
+- when the client emit(create) an event and send to server + data, the server shd acknowledge(give feedback) to the client about the data sent. whether its good data or there was an error.

@@ -2,6 +2,7 @@
    const socketIo = require('socket.io');
    const path = require('path');
    const http = require('http');
+   const { generateMessage } = require('./utils/message')
 
    var app = express();
    var server = http.createServer(app) 
@@ -15,41 +16,26 @@
     // do something with the callback function. call it with a socket.
     // this socket is similar to one we initiated in the client html file. this represent the individual user as opposed to all the users connected to the server.
    io.on('connection', (socket) => {  
-    console.log('New User Connected')
-
-    // emit is used to create the event
-    // socket.emit('newMessage', {   // emit an event to a single connection.
-    //     from: 'mike@mike.com',
-    //     text: 'Hello Kwame',
-    //     createdAt: 123
-    // })
+    // console.log('New User Connected')
 
    socket.on('createMessage', (message) => {
-      console.log('This is the message', message);
-      io.emit('newMessage', {   // io.emit will emit an event to every single connection
-       from: message.from,
-       text: message.text,
-       createdAt: new Date().getTime()
-      })
+      console.log('This is the message: ', message);
+      // io.emit will emit an event to every single connected user
+      io.emit('newMessage', generateMessage(message.from, message.text));
+     
     })
 
     // socket.emit from Admin text Welcome to the chat app
-      socket.emit('newMessage', {
-          from: 'Admin',
-          text: 'Welcome to the chat app',
-          createdAt: new Date().getTime()
-      })
+    // emit an event to a single connection.
+      socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app '))
 
       // socket.broadcast.emit from Admin text New user joined
-     socket.broadcast.emit('newMessage', {
-        from: 'Admin',
-        text: 'New User Joined',
-        createdAt: new Date().getTime()
-    })
+      // emit an event to anybody else apart from teh user who just joined
+     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined'))
 
    })
 
-  
+
 
 server.listen(port, () => {
     console.log('Server is up and running');
