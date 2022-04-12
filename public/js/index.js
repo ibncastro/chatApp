@@ -31,6 +31,19 @@ socket.on("connect", function () {
 
     jQuery('#messages').append(li)
   });
+
+  socket.on('newLocationMessage', (message) => {
+    var li = jQuery('<li></li>');
+    // target=_blank will open the link in a new tab
+    var a = jQuery('<a target="_blank">My Current Location</a>')  
+    li.text(message.from + ":")
+    a.attr('href', message.url)
+
+    li.append(a);
+    jQuery('#messages').append(li)
+  })
+
+
 });
 
 // using the disconnect event

@@ -2,7 +2,7 @@
    const socketIo = require('socket.io');
    const path = require('path');
    const http = require('http');
-   const { generateMessage } = require('./utils/message')
+   const { generateMessage, generateLocationMessage } = require('./utils/message')
 
    var app = express();
    var server = http.createServer(app) 
@@ -24,6 +24,10 @@
       // io.emit will emit an event to every single connected user
       io.emit('newMessage', generateMessage(message.from, message.text));
      
+    })
+
+    socket.on('createLocationMessage', (coords) => {
+      io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
     })
 
     // socket.emit from Admin text Welcome to the chat app
