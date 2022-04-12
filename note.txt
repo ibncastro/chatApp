@@ -16,3 +16,14 @@ REAL TIME WEB APPS WITH SOCKET.IO
 - it is an object that has its own emit function.
 
 - when the client emit(create) an event and send to server + data, the server shd acknowledge(give feedback) to the client about the data sent. whether its good data or there was an error.
+
+
+Timestamps in Node 
+- timestamp like 0 represent the starting date which is 1 jan 1970 midnight.
+- timestamp like 1000 represents a time after 1 jan 1970 
+- timestamp like -2000 represent a time before 1 jan 1970
+- timestamp in javascript are stored in miliseconds
+- so timestamp of 1000 represent one second in january 1 1970
+
+The Date Object 
+- a lot of methods to use on new Date() but they dont format the result to be friendly. like printing the day of the month or day like sunday, wednesday.

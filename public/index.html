@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Document</title>
-</head>
-<body>
-    <p>Welcome to the chat app</p>
+  </head>
+  <body class="chat">
+    <div class="chat__sidebar">
+      <h3>People</h3>
+      <div id="user"></div>
+    </div>
 
-    <ol id="messages">
+    <div class="chat__main">
+      <ol class="chat__messages" id="messages"></ol>
 
-    </ol>
-
-    <form id="message-form">
-        <input type="text" name="message" id="" placeholder="Message">
-        <button>Send</button>
-    </form>
-    <button id="send-location">SendLocation</button>
-
-
-
+      <div class="chat__footer">
+        <form id="message-form">
+          <input type="text" autofocus autocomplete="false" name="message" id="" placeholder="Message" />
+          <button>Send</button>
+        </form>
+        <button id="send-location">SendLocation</button>
+      </div>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery.js"></script>
+    <script src="/js/libs/moment.js"></script>
     <script src="/js/index.js"></script>
-</body>
+  </body>
 </html>

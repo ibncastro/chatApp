@@ -19,11 +19,11 @@
    io.on('connection', (socket) => {  
     // console.log('New User Connected')
 
-   socket.on('createMessage', (message) => {
+   socket.on('createMessage', (message, callback) => {
       console.log('This is the message: ', message);
       // io.emit will emit an event to every single connected user
       io.emit('newMessage', generateMessage(message.from, message.text));
-     
+     callback()  // this is without data. we will use it to know when the server responded.
     })
 
     socket.on('createLocationMessage', (coords) => {
