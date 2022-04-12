@@ -9,7 +9,8 @@
    var io = socketIo(server);  // this is our websocket server
   
    const publicPath = path.join('__dirname', '../public')
-   const port = process.env.PORT | 3001
+   const port = process.env.PORT || 3000
+   const host = '0.0.0.0';
 
    app.use(express.static(publicPath));
     // io.on lets u register an event listener. connection let u listen to new connected user to the server
@@ -37,6 +38,6 @@
 
 
 
-server.listen(port, () => {
+server.listen(port, host, () => {
     console.log('Server is up and running');
 })
