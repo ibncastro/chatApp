@@ -1,17 +1,16 @@
-const moment = require('moment');
+var moment = require('moment');
 
 // var date = new Date();
+// var months = ['Jan', 'Feb'];
 // console.log(date.getMonth());
 
-var date = moment(); // create a date representing current point in time.
-console.log(date.format('MMMM Do, YYYY'));
-// date.add(1, 'month')
-console.log(date.format('h:m'));
+// var date = moment();
+// date.add(100, 'years').subtract(9, 'months');
+// console.log(date.format('MMM Do, YYYY'));
 
-var createdAt = 1111234
-var date = moment(createdAt)
-console.log(date.format('h:mm'));
-
-var someTimestamp = moment().valueOf()
+var someTimestamp = moment().valueOf();
 console.log(someTimestamp);
 
+var createdAt = 1234;
+var date = moment(createdAt);
+console.log(date.format('h:mm a'));

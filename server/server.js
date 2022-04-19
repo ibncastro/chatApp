@@ -1,47 +1,48 @@
-   const express = require("express")
-   const socketIo = require('socket.io');
-   const path = require('path');
-   const http = require('http');
-   const { generateMessage, generateLocationMessage } = require('./utils/message')
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketIO = require('socket.io');
 
-   var app = express();
-   var server = http.createServer(app) 
-   var io = socketIo(server);  // this is our websocket server
-  
-   const publicPath = path.join('__dirname', '../public')
-   const port = process.env.PORT || 3000
-   const host = '0.0.0.0';
+const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/validation');
+const publicPath = path.join(__dirname, '../public');
+const port = process.env.PORT || 3000;
+var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 
-   app.use(express.static(publicPath));
-    // io.on lets u register an event listener. connection let u listen to new connected user to the server
-    // do something with the callback function. call it with a socket.
-    // this socket is similar to one we initiated in the client html file. this represent the individual user as opposed to all the users connected to the server.
-   io.on('connection', (socket) => {  
-    // console.log('New User Connected')
+app.use(express.static(publicPath));
 
-   socket.on('createMessage', (message, callback) => {
-      console.log('This is the message: ', message);
-      // io.emit will emit an event to every single connected user
-      io.emit('newMessage', generateMessage(message.from, message.text));
-     callback()  // this is without data. we will use it to know when the server responded.
-    })
+io.on('connection', (socket) => {
+  console.log('New user connected');
 
-    socket.on('createLocationMessage', (coords) => {
-      io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
-    })
+  socket.on('join', (params, callback) => {
+    if(!isRealString(params.name) || !isRealString(params.room)) {
+      callback('Name and room name are required.');
+    }
+    socket.join(params.room);
 
-    // socket.emit from Admin text Welcome to the chat app
-    // emit an event to a single connection.
-      socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app '))
+    socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
+    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined`));
 
-      // socket.broadcast.emit from Admin text New user joined
-      // emit an event to anybody else apart from teh user who just joined
-     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined'))
+    callback();
+  });
 
-   })
+  socket.on('createMessage', (message, callback) => {
+    console.log('createMessage', message);
+    io.emit('newMessage', generateMessage(message.from, message.text));
+    callback();
+  });
 
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+  });
 
+  socket.on('disconnect', function () {
+    console.log('Disconnected from server');
+  });
+});
 
-server.listen(port, host, () => {
-    console.log('Server is up and running');
-})
+server.listen(port, () => {
+  console.log(`Server is up on ${port}`);
+});
